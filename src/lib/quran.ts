@@ -1,6 +1,8 @@
 import { and, asc, eq, gte, ilike, inArray, lte, or, sql, count } from "drizzle-orm";
 import { db, schema } from "./db";
+import { createHash } from "node:crypto";
 import aboutData from "../../data/about.json";
+import i18nData from "../../data/commentary-i18n.json";
 
 const { surahs, ayahs, translations, words, commentaries, favorites, comments } = schema;
 
@@ -122,10 +124,14 @@ export async function about(n: number, lang: Lang = "az") {
 }
 
 /** Ayə tapılmasa null (404), şərh yoxdursa boş siyahı. */
-export async function ayahCommentaries(surah: number, num: number) {
+const CI18N = i18nData as Record<string, Partial<Record<Lang, string>>>;
+const textId = (x: string) => createHash("sha1").update(x, "utf8").digest("hex").slice(0, 10);
+
+/** Tərcümə varsa seçilmiş dildə (maşın tərcüməsi), yoxdursa orijinal mətn. */
+export async function ayahCommentaries(surah: number, num: number, lang: Lang = "tr") {
   const id = await findAyahId(surah, num);
   if (id === null) return null;
   const rows = await db.select({ title: commentaries.title, text: commentaries.text })
     .from(commentaries).where(eq(commentaries.ayahId, id)).orderBy(asc(commentaries.order));
-  return rows;
+  return rows.map((r) => ({ title: r.title, text: CI18N[textId(r.text)]?.[lang] ?? r.text }));
 }

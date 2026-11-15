@@ -42,3 +42,4 @@ next-env.d.ts
 
 # yerli test bazas?
 /.pglite
+/.pglite-t
