@@ -1,0 +1,85 @@
+@import "tailwindcss";
+
+/* Tema dəyişdirmə: <html data-theme="dark|light"> */
+@custom-variant dark (&:where([data-theme="dark"], [data-theme="dark"] *));
+@custom-variant light (&:where([data-theme="light"], [data-theme="light"] *));
+
+:root {
+  --bg: #0c0b08; --surface: #16140e; --surface-2: #1f1c13;
+  --text: #efe8d4; --muted: #a39a80; --line: #2e2a1c;
+  --gold: #f2b705; --gold-soft: #ffd75e; --on-gold: #14110a;
+  --glow: 242, 183, 5;
+  color-scheme: dark;
+}
+[data-theme="light"] {
+  --bg: #f7f3e6; --surface: #fffdf5; --surface-2: #efe8d0;
+  --text: #16130a; --muted: #6d6448; --line: #ddd2ae;
+  --gold: #b8860b; --gold-soft: #d9a406; --on-gold: #fff8dc;
+  --glow: 184, 134, 11;
+  color-scheme: light;
+}
+
+/* Tailwind utility-lərinə dizayn tokenləri: bg-bg, bg-surface, text-gold, border-line, font-ar ... */
+@theme inline {
+  --color-bg: var(--bg);
+  --color-surface: var(--surface);
+  --color-surface-2: var(--surface-2);
+  --color-text: var(--text);
+  --color-muted: var(--muted);
+  --color-line: var(--line);
+  --color-gold: var(--gold);
+  --color-gold-soft: var(--gold-soft);
+  --color-on-gold: var(--on-gold);
+  --font-ar: var(--font-amiri), serif;
+  --font-head: var(--font-lora), Georgia, serif;
+  --font-ui: var(--font-manrope), system-ui, sans-serif;
+  --radius-card: 14px;
+  --animate-wave: wave 3.2s ease-in-out infinite;
+  --animate-spin-glow: spin-glow 5s linear infinite;
+}
+
+@property --ang { syntax: "<angle>"; inherits: false; initial-value: 0deg; }
+@keyframes spin-glow { to { --ang: 360deg; } }
+@keyframes wave {
+  0%, 100% { transform: scale(.97, 1.02); filter: blur(22px); }
+  50% { transform: scale(1.03, .98); filter: blur(30px); }
+}
+@keyframes fall {
+  0% { opacity: 0; transform: translate(0, 0); }
+  15% { opacity: 1; }
+  100% { opacity: 0; transform: translate(var(--dx), var(--dy)); }
+}
+
+@layer base {
+  html { scroll-behavior: smooth; overflow-x: clip; }
+  body { background: var(--bg); color: var(--text); font-family: var(--font-ui), system-ui, sans-serif; line-height: 1.6; min-height: 100dvh; transition: background .4s, color .4s; overflow-x: clip; }
+  :focus-visible { outline: 2px solid var(--gold); outline-offset: 2px; }
+  button { cursor: pointer; }
+}
+
+/* Ayə kartı: dönən nur + nəfəs alan dalğa (hover-də) — yalnız bu mürəkkəb effekt xüsusi CSS-dir */
+@layer components {
+  .ayah-card { position: relative; isolation: isolate; }
+  .ayah-card::before, .ayah-card::after {
+    content: ""; position: absolute; border-radius: 17px; z-index: -1; opacity: 0; transition: opacity .6s; pointer-events: none;
+  }
+  .ayah-card::before {
+    inset: -3px;
+    background: conic-gradient(from var(--ang), transparent 0 20%, rgba(var(--glow), .9) 35%, transparent 50%, rgba(var(--glow), .6) 75%, transparent 90%);
+    filter: blur(16px); animation: var(--animate-spin-glow);
+  }
+  .ayah-card::after {
+    inset: -14px; background: radial-gradient(ellipse at 50% 50%, rgba(var(--glow), .28), transparent 68%);
+    filter: blur(22px); animation: var(--animate-wave);
+  }
+  .ayah-card:hover { border-color: rgba(var(--glow), .7); transform: translateY(-3px); }
+  .ayah-card:hover::before { opacity: .75; }
+  .ayah-card:hover::after { opacity: 1; }
+  .dust { position: absolute; left: 0; top: 0; width: var(--s); height: var(--s); border-radius: 50%; pointer-events: none; z-index: 5;
+    background: radial-gradient(circle, #fff6c9, var(--gold) 55%, transparent 70%); box-shadow: 0 0 8px 2px rgba(var(--glow), .8);
+    animation: fall var(--t) ease-in forwards; }
+}
+@media (prefers-reduced-motion: reduce) {
+  .ayah-card::before, .ayah-card::after { animation: none; }
+  .dust { display: none; }
+}

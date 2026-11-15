@@ -1,11 +1,12 @@
 import type { NextConfig } from "next";
 
-// Təhlükəsizlik başlıqları. Şriftlər Google Fonts-dandır (style.css @import).
+// Təhlükəsizlik başlıqları. Şriftlər next/font ilə build zamanı yüklənib saytın özündən verilir.
 const CSP = [
   "default-src 'self'",
-  "script-src 'self' 'unsafe-inline'", // Next.js inline bootstrap + tema skripti
-  "style-src 'self' 'unsafe-inline' https://fonts.googleapis.com",
-  "font-src 'self' https://fonts.gstatic.com",
+  // Next.js inline bootstrap + tema skripti; 'unsafe-eval' yalnız inkişaf rejimində (React dev üçün)
+  `script-src 'self' 'unsafe-inline'${process.env.NODE_ENV === "production" ? "" : " 'unsafe-eval'"}`,
+  "style-src 'self' 'unsafe-inline'",
+  "font-src 'self'",
   "img-src 'self' data:",
   "connect-src 'self'",
   "frame-ancestors 'none'",

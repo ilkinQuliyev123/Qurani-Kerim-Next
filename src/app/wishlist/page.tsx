@@ -1,27 +1,24 @@
-import { getSession } from "@/lib/auth";
 import { redirect } from "next/navigation";
-import LegacyScripts from "@/components/LegacyScripts";
+import { getLang, getSession } from "@/lib/auth";
+import { wishlist } from "@/lib/user";
+import { BrowseButton, T, WishlistAyahList } from "@/components/AyahList";
 
 export const metadata = { title: "Bəyəndiklərim — Qurani-Kərim" };
 
 export default async function WishlistPage() {
   const s = await getSession();
   if (!s) redirect("/login");
+  const first = await wishlist(s.uid, 0, 20, await getLang());
   return (
-    <>
-      <link rel="stylesheet" href="/css/surah.css" />
-      <link rel="stylesheet" href="/css/user.css" />
-      <main>
-        <h1 className="ptitle" data-i18n="wTitle"></h1>
-        <section id="ayahList"></section>
-        <div id="sentinel"><button id="moreBtn" className="btn more" data-i18n="more"></button></div>
-        <div id="empty" className="empty" hidden>
-          <h2 data-i18n="noWish"></h2>
-          <p data-i18n="noWishHint"></p>
-          <button className="btn btn--solid" id="browseBtn" data-i18n="browse"></button>
+    <main className="mx-auto my-10 w-[min(920px,100%-2rem)]">
+      <h1 className="mb-6 font-head text-3xl text-gold"><T k="wTitle" /></h1>
+      <WishlistAyahList initial={first.items} total={first.total} authed isAdmin={s.admin} />
+      {first.total === 0 && (
+        <div className="text-center">
+          <p className="mb-4 text-muted"><T k="noWishHint" /></p>
+          <BrowseButton />
         </div>
-      </main>
-      <LegacyScripts srcs={["/js/ayah.js", "/js/user.js", "/js/wishlist.js"]} />
-    </>
+      )}
+    </main>
   );
 }
