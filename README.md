@@ -1,5 +1,5 @@
 # Qurani-Kərim (Next.js)
-n**Canlı sayt:** https://qurani-kerim-next.vercel.app
+**Canlı sayt:** https://qurani-kerim-next.vercel.app
 
 Next.js 16 + TypeScript + Drizzle ORM + Neon Postgres. Vercel-də işləyir.
 
