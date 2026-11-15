@@ -1,5 +1,6 @@
 import { and, asc, eq, gte, ilike, inArray, lte, or, sql, count } from "drizzle-orm";
 import { db, schema } from "./db";
+import aboutData from "../../data/about.json";
 
 const { surahs, ayahs, translations, words, commentaries, favorites, comments } = schema;
 
@@ -110,9 +111,14 @@ export async function findAyahId(surah: number, num: number) {
   return r[0]?.id ?? null;
 }
 
-export async function about(n: number) {
+const ABOUT = aboutData as Record<string, Record<Lang, string>>;
+
+/** Surə haqqında mətn seçilmiş dildə (maşın tərcüməsi); tərcümə yoxdursa orijinal. */
+export const aboutText = (n: number, lang: Lang, fallback: string | null) => ABOUT[String(n)]?.[lang] ?? fallback;
+
+export async function about(n: number, lang: Lang = "az") {
   const s = await getSurah(n);
-  return s ? { n: s.id, name: s.name, about: s.about } : null;
+  return s ? { n: s.id, name: s.name, about: aboutText(s.id, lang, s.about) } : null;
 }
 
 /** Ayə tapılmasa null (404), şərh yoxdursa boş siyahı. */

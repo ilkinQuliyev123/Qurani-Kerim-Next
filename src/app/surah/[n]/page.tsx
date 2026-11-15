@@ -1,5 +1,5 @@
 import { notFound } from "next/navigation";
-import { getSurah, range } from "@/lib/quran";
+import { aboutText, getSurah, range } from "@/lib/quran";
 import { getLang, getSession } from "@/lib/auth";
 import { SurahAyahList, T } from "@/components/AyahList";
 
@@ -34,10 +34,10 @@ export default async function SurahPage({ params }: Props) {
             <small dir="ltr" className="block font-ui text-sm text-muted"><T k="bismillah" /></small>
           </p>
         )}
-        {s.about && (
+        {aboutText(s.id, lang, s.about) && (
           <details className="mt-4 rounded-card border border-line bg-surface p-3 text-start">
             <summary className="min-h-11 cursor-pointer py-2 font-semibold text-gold">{ABOUT[lang] ?? ABOUT.az}</summary>
-            <p className="whitespace-pre-line leading-relaxed">{s.about}</p>
+            <p className="whitespace-pre-line leading-relaxed">{aboutText(s.id, lang, s.about)}</p>
           </details>
         )}
       </section>
