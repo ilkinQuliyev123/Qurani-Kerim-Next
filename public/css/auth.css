@@ -1,0 +1,45 @@
+/* ===== PART 5: login/register (style.css-dən sonra) ===== */
+.authwrap{min-height:calc(100vh - 180px);display:grid;place-items:center;padding:1rem 0}
+.auth{width:min(440px,100%);margin:0;padding:2.2rem 2rem}
+.auth__mark{font:700 3rem/1 var(--f-ar);color:var(--gold);text-align:center;text-shadow:0 0 24px rgba(var(--glow),.6);margin-bottom:.5rem}
+.auth h1{font:600 1.8rem var(--f-head);text-align:center;margin-bottom:1.6rem}
+.fld{display:block;margin-bottom:1.1rem}
+.fld>span{display:block;font:700 .85rem var(--f-ui);color:var(--muted);margin-bottom:.35rem}
+.fld input[type=text],.fld input[type=email],.fld input[type=password]{width:100%;padding:.75rem 1rem;border-radius:12px;border:1px solid var(--line);background:var(--bg);transition:.3s}
+.fld input:focus{border-color:var(--gold);box-shadow:0 0 0 4px rgba(var(--glow),.15);outline:0}
+.fld input[aria-invalid=true]{border-color:#ff8a6b}
+.pw{position:relative}
+.pw input{padding-right:5.2rem!important}
+.pw__eye{position:absolute;right:.6rem;top:50%;translate:0 -50%;background:none;border:0;color:var(--gold-soft);font-size:.85rem;font-weight:700;cursor:pointer;padding:.3rem .5rem}
+.err[data-err]{color:#ff8a6b;font-size:.85rem;display:block;min-height:1.1em;margin-top:.3rem}
+#strength{height:4px;border-radius:4px;background:var(--line);margin-top:.5rem;position:relative;overflow:hidden}
+#strength::after{content:"";position:absolute;inset:0;width:var(--w,0);background:var(--gold);box-shadow:0 0 10px var(--gold);transition:width .4s}
+.chk{display:flex;align-items:center;gap:.5rem;margin-bottom:1.4rem;font-size:.92rem;cursor:pointer}
+.chk input{accent-color:var(--gold);width:18px;height:18px}
+.auth .btn{width:100%;padding:.8rem;font-size:1rem}
+.auth .btn:disabled{opacity:.5;cursor:wait}
+.auth__alt{text-align:center;margin-top:1.4rem;color:var(--muted);font-size:.95rem}
+.auth__alt a{color:var(--gold-soft);font-weight:700;margin-left:.3rem}
+.auth__alt a:hover{text-decoration:underline}
+
+/* ===== RESPONSIVE: tablet (≤1024px) ===== */
+@media(max-width:1024px){
+  .authwrap{min-height:calc(100dvh - 160px)}
+  .auth{padding:2rem 1.6rem}
+}
+
+/* ===== RESPONSIVE: phone (≤480px) ===== */
+@media(max-width:480px){
+  .authwrap{min-height:auto;padding:.5rem 0 1rem}
+  .auth{width:100%;padding:1.6rem 1.1rem}
+  .auth__mark{font-size:2.4rem}
+  .auth h1{font-size:1.5rem;margin-bottom:1.2rem}
+  .fld input[type=text],.fld input[type=email],.fld input[type=password]{min-height:44px;font-size:16px;padding:.7rem .9rem}
+  .pw input{padding-right:4.8rem!important}
+  .pw__eye{min-height:44px;right:.2rem;padding:0 .5rem;display:inline-flex;align-items:center}
+  .chk{min-height:44px}
+  .chk input{width:20px;height:20px}
+  .auth .btn{min-height:48px}
+  .auth__alt{font-size:.9rem}
+  .auth__alt a{min-height:44px;display:inline-flex;align-items:center}
+}

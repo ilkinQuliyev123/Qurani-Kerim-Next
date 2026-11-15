@@ -1,0 +1,174 @@
+/* ===== PART 1: Design system + Header + Footer + Ayə kartı ===== */
+@import url('https://fonts.googleapis.com/css2?family=Amiri:wght@400;700&family=Lora:wght@500;600&family=Manrope:wght@400;500;700&display=swap');
+
+:root{
+  --bg:#0c0b08; --surface:#16140e; --surface-2:#1f1c13;
+  --text:#efe8d4; --muted:#a39a80; --line:#2e2a1c;
+  --gold:#f2b705; --gold-soft:#ffd75e; --on-gold:#14110a;
+  --glow:242,183,5;
+  --r:14px;
+  --f-ar:'Amiri',serif; --f-head:'Lora',Georgia,serif; --f-ui:'Manrope',system-ui,sans-serif;
+  color-scheme:dark;
+}
+[data-theme="light"]{
+  --bg:#f7f3e6; --surface:#fffdf5; --surface-2:#efe8d0;
+  --text:#16130a; --muted:#6d6448; --line:#ddd2ae;
+  --gold:#b8860b; --gold-soft:#d9a406; --on-gold:#fff8dc;
+  --glow:184,134,11;
+  color-scheme:light;
+}
+*{box-sizing:border-box;margin:0;padding:0}
+html{scroll-behavior:smooth}
+body{background:var(--bg);color:var(--text);font:16px/1.6 var(--f-ui);transition:background .4s,color .4s;min-height:100vh;display:flex;flex-direction:column}
+main{flex:1;width:min(920px,100% - 2rem);margin:2.5rem auto}
+a{color:inherit;text-decoration:none}
+button,input,select{font:inherit;color:inherit}
+:focus-visible{outline:2px solid var(--gold);outline-offset:2px}
+
+/* ---------- Header ---------- */
+.header{position:sticky;top:0;z-index:50;background:color-mix(in srgb,var(--bg) 88%,transparent);backdrop-filter:blur(12px);border-bottom:1px solid var(--line)}
+.header__in{width:min(1200px,100% - 2rem);margin:auto;display:flex;align-items:center;gap:1rem;padding:.7rem 0;flex-wrap:wrap}
+.logo{font:600 1.35rem var(--f-head);display:flex;align-items:center;gap:.5rem;color:var(--gold)}
+.logo b{font:700 1.7rem var(--f-ar)}
+.nav{display:flex;gap:.3rem}
+.nav a,.nav button{background:none;border:0;padding:.5rem .8rem;border-radius:999px;cursor:pointer;color:var(--text);transition:.25s}
+.nav a:hover,.nav button:hover{background:var(--surface-2);color:var(--gold-soft)}
+.search{flex:1;min-width:200px;max-width:380px;margin-inline:auto;position:relative}
+.search input{width:100%;padding:.6rem 1rem .6rem 2.6rem;border-radius:999px;border:1px solid var(--line);background:var(--surface);transition:.3s}
+.search input:focus{border-color:var(--gold);box-shadow:0 0 0 4px rgba(var(--glow),.15);outline:0}
+.search svg{position:absolute;left:.9rem;top:50%;translate:0 -50%;width:18px;color:var(--muted)}
+.tools{display:flex;align-items:center;gap:.5rem}
+.select,.icon-btn{background:var(--surface);border:1px solid var(--line);border-radius:999px;padding:.45rem .8rem;cursor:pointer}
+.select{appearance:none;font-weight:700;font-size:.85rem}
+.icon-btn{width:38px;height:38px;display:grid;place-items:center;padding:0}
+.icon-btn:hover,.select:hover{border-color:var(--gold)}
+.btn{padding:.5rem 1.1rem;border-radius:999px;border:1px solid var(--gold);background:transparent;color:var(--gold-soft);font-weight:700;cursor:pointer;transition:.25s}
+.btn:hover{background:var(--gold);color:var(--on-gold)}
+.btn--solid{background:var(--gold);color:var(--on-gold)}
+.btn--solid:hover{background:var(--gold-soft)}
+[data-theme="dark"] .i-sun,[data-theme="light"] .i-moon{display:none}
+
+/* ---------- Footer ---------- */
+.footer{border-top:1px solid var(--line);padding:2rem 1rem;text-align:center;color:var(--muted);font-size:.9rem}
+.footer .ar{font:1.6rem var(--f-ar);color:var(--gold);display:block;margin-bottom:.4rem}
+
+/* ---------- Ayə kartı + dalğalanan nur ---------- */
+@property --ang{syntax:'<angle>';inherits:false;initial-value:0deg}
+.ayah{position:relative;isolation:isolate;background:var(--surface);border:1px solid var(--line);border-radius:var(--r);padding:1.8rem 1.6rem;margin-bottom:1.5rem;transition:border-color .4s,transform .4s}
+.ayah::before,.ayah::after{content:"";position:absolute;inset:-3px;border-radius:calc(var(--r) + 3px);z-index:-1;opacity:0;transition:opacity .6s}
+.ayah::before{ /* dönən nur */
+  background:conic-gradient(from var(--ang),transparent 0 20%,rgba(var(--glow),.9) 35%,transparent 50%,rgba(var(--glow),.6) 75%,transparent 90%);
+  filter:blur(16px);animation:spin 5s linear infinite}
+.ayah::after{ /* nəfəs alan dalğa */
+  inset:-14px;background:radial-gradient(ellipse at 50% 50%,rgba(var(--glow),.28),transparent 68%);
+  filter:blur(22px);animation:wave 3.2s ease-in-out infinite}
+.ayah:hover{border-color:rgba(var(--glow),.7);transform:translateY(-3px)}
+.ayah:hover::before{opacity:.75}.ayah:hover::after{opacity:1}
+@keyframes spin{to{--ang:360deg}}
+@keyframes wave{0%,100%{transform:scale(.97,1.02);filter:blur(22px)}50%{transform:scale(1.03,.98);filter:blur(30px)}}
+
+.ayah__bar{display:flex;justify-content:space-between;align-items:center;margin-bottom:1rem}
+.ayah__no{font:600 .95rem var(--f-head);color:var(--gold);border:1px solid var(--line);border-radius:999px;padding:.15rem .8rem}
+.ayah__acts{display:flex;gap:.4rem}
+.ayah__ar{font:400 clamp(1.9rem,4.5vw,2.8rem)/2.1 var(--f-ar);direction:rtl;text-align:right;margin-bottom:1.2rem}
+.words{width:100%;border-collapse:collapse;margin-bottom:1.2rem;font-size:.95rem}
+.words th{font:700 .8rem var(--f-ui);color:var(--muted);text-align:left;padding:.5rem;border-bottom:1px solid var(--gold)}
+.words td{padding:.55rem .5rem;border-bottom:1px solid var(--line)}
+.words td:first-child{font:1.5rem var(--f-ar);direction:rtl;text-align:left}
+.words td:nth-child(2){font-style:italic;font-family:var(--f-head);color:var(--gold-soft)}
+.words tbody tr:hover{background:rgba(var(--glow),.07)}
+.ayah__tr{font:500 1.1rem/1.8 var(--f-head);border-left:3px solid var(--gold);padding-left:1rem}
+.ayah__tr small{display:block;margin-top:.4rem;font:.8rem var(--f-ui);color:var(--muted)}
+.fav.on{background:var(--gold);color:var(--on-gold);border-color:var(--gold)}
+
+/* ---------- Sehirli toz ---------- */
+.dust{position:absolute;left:0;top:0;width:var(--s);height:var(--s);border-radius:50%;pointer-events:none;z-index:5;
+  background:radial-gradient(circle,#fff6c9,var(--gold) 55%,transparent 70%);box-shadow:0 0 8px 2px rgba(var(--glow),.8);
+  animation:fall var(--t) ease-in forwards}
+@keyframes fall{0%{opacity:0;transform:translate(0,0)}15%{opacity:1}
+  100%{opacity:0;transform:translate(var(--dx),var(--dy))}}
+
+@media(max-width:760px){.nav{order:3;width:100%}.search{order:4;max-width:none;width:100%}.tools{margin-left:auto}}
+@media(prefers-reduced-motion:reduce){.ayah::before,.ayah::after{animation:none}.dust{display:none}}
+
+/* ===== PART 2: Surələr modalı (style.css-dən sonra qoşulur) ===== */
+.modal{border:0;background:transparent;padding:0;margin:auto;width:min(560px,100% - 1.5rem);max-height:86vh;color:var(--text);overflow:visible}
+.modal::backdrop{background:rgba(5,4,2,.72);backdrop-filter:blur(6px)}
+.modal[open]{animation:modalIn .35s cubic-bezier(.2,.8,.2,1)}
+.modal[open]::backdrop{animation:fade .35s}
+@keyframes modalIn{from{opacity:0;transform:translateY(24px) scale(.97)}}
+@keyframes fade{from{opacity:0}}
+
+.modal__box{position:relative;display:flex;flex-direction:column;max-height:86vh;background:var(--surface);border:1px solid rgba(var(--glow),.45);border-radius:18px;
+  box-shadow:0 0 0 1px rgba(var(--glow),.12),0 30px 80px rgba(0,0,0,.55),0 0 60px rgba(var(--glow),.12);overflow:hidden}
+.modal__head{display:flex;justify-content:space-between;align-items:center;padding:1.1rem 1.3rem .5rem}
+.modal__head h2{font:600 1.5rem var(--f-head);color:var(--gold)}
+.modal__filter{margin:.5rem 1.3rem 1rem;padding:.65rem 1rem;border-radius:999px;border:1px solid var(--line);background:var(--bg);transition:.3s}
+.modal__filter:focus{border-color:var(--gold);box-shadow:0 0 0 4px rgba(var(--glow),.15);outline:0}
+.modal__empty{padding:2rem;text-align:center;color:var(--muted)}
+
+.surahs{list-style:none;overflow-y:auto;padding:0 .6rem 1rem;scrollbar-width:thin;scrollbar-color:var(--gold) transparent;
+  mask-image:linear-gradient(transparent,#000 14px,#000 calc(100% - 22px),transparent)}
+.surahs::-webkit-scrollbar{width:8px}.surahs::-webkit-scrollbar-thumb{background:var(--gold);border-radius:8px}
+.surahs a{position:relative;display:flex;align-items:center;gap:1rem;padding:.7rem .9rem;border-radius:12px;transition:background .3s,box-shadow .5s}
+.surahs a:hover,.surahs a:focus-visible{background:var(--surface-2);box-shadow:0 0 22px rgba(var(--glow),.3),inset 0 0 18px rgba(var(--glow),.1);outline:0}
+.surahs .no{flex:none;width:40px;height:40px;display:grid;place-items:center;font:600 .9rem var(--f-head);color:var(--gold);
+  border:1px solid var(--line);border-radius:50%;transition:.3s}
+.surahs a:hover .no{background:var(--gold);color:var(--on-gold);border-color:var(--gold)}
+.surahs .name{flex:1;font:500 1.05rem var(--f-head)}
+.surahs .cnt{font-size:.82rem;color:var(--muted)}
+.surahs .cnt b{font-weight:700;color:var(--text)}
+@media(prefers-reduced-motion:reduce){.modal[open],.modal[open]::backdrop{animation:none}}
+
+/* ===== MVC: istifadəçi adı + ayə şərhləri ===== */
+.uname{color:var(--muted);font-size:.9rem;margin-right:.3rem}
+.cmts{margin-top:1rem;padding-top:1rem;border-top:1px solid var(--line);position:relative;z-index:1}
+.cmts h4{margin:0 0 .6rem;font-size:.95rem;color:var(--muted)}
+.cmts__f{display:flex;gap:.5rem;margin-bottom:.8rem}
+.cmts__f textarea{flex:1;min-height:2.6rem;resize:vertical}
+.cmt{padding:.5rem 0;border-bottom:1px dashed var(--line)}
+.cmt time{color:var(--muted);font-size:.8rem;margin-left:.4rem}
+.cmt .icon-btn{float:right;width:auto;height:auto;padding:0 .3rem}
+.cmt p{margin:.2rem 0 0;white-space:pre-wrap}
+.cmts .field{padding:.6rem .8rem;border-radius:10px;border:1px solid var(--line);background:var(--bg);color:inherit;font:inherit}
+
+/* ===== RESPONSIVE: tablet (≤1024px) ===== */
+@media(max-width:1024px){
+  body{min-height:100dvh}
+  img,video,iframe{max-width:100%;height:auto}
+  .header__in{gap:.7rem}
+  .search{min-width:0;flex:1 1 220px;max-width:none}
+  .ayah{padding:1.5rem 1.3rem}
+  .footer{padding:1.5rem 1rem}
+}
+
+/* ===== RESPONSIVE: phone (≤480px) ===== */
+@media(max-width:480px){
+  main{margin:1.5rem auto}
+  .header__in{width:calc(100% - 1.5rem);padding:.6rem 0;gap:.6rem}
+  .logo{font-size:1.15rem}
+  .logo b{font-size:1.45rem}
+  .nav{flex-wrap:wrap;gap:.2rem}
+  .nav a,.nav button{min-height:44px;display:inline-flex;align-items:center;padding:.5rem .75rem}
+  .search input{min-height:44px;font-size:16px}
+  .tools{flex-wrap:wrap;gap:.4rem}
+  .select{min-height:44px;font-size:16px;padding:.4rem .7rem}
+  .icon-btn{width:44px;height:44px}
+  .btn{min-height:44px;display:inline-flex;align-items:center;justify-content:center;padding:.5rem .85rem}
+  .footer{padding:1.5rem 1rem}
+  .footer .ar{font-size:1.4rem}
+  .ayah{padding:1.2rem 1rem;margin-bottom:1rem;border-radius:12px}
+  .ayah__bar{flex-wrap:wrap;gap:.5rem}
+  .ayah__acts{flex-wrap:wrap}
+  .ayah__acts button,.ayah__acts a{min-width:44px;min-height:44px}
+  .ayah__ar{font-size:clamp(1.8rem,8vw,2.2rem)}
+  .ayah__tr{font-size:1rem;padding-left:.8rem}
+  .words{font-size:.88rem}
+  .words th,.words td{padding:.45rem .3rem}
+  .words td:first-child{font-size:1.3rem}
+  .words td,.ayah__tr,.note__text,.cmt p{overflow-wrap:anywhere}
+  .toast{width:max-content;max-width:calc(100% - 2rem);white-space:normal;text-align:center}
+}
+
+/* animasiya effektləri üfüqi scroll yaratmasın */
+html,body{overflow-x:clip}

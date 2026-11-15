@@ -1,0 +1,52 @@
+/* ===== PART 4: wishlist və qeydlər (style, modal, surah css-dən sonra) ===== */
+.ptitle{font:600 clamp(1.8rem,4vw,2.6rem) var(--f-head);color:var(--gold);margin-bottom:2rem}
+.ayah.leaving{opacity:0;transform:scale(.96) translateY(-8px);transition:.35s}
+
+.empty{text-align:center;padding:4rem 1rem;border:1px dashed var(--line);border-radius:var(--r)}
+.empty h2{font:600 1.4rem var(--f-head);margin-bottom:.4rem}
+.empty p{color:var(--muted);margin-bottom:1.4rem}
+
+.nform{display:grid;gap:.8rem;margin-bottom:2.5rem;padding:1.4rem;background:var(--surface);border:1px solid var(--line);border-radius:var(--r)}
+.field{width:100%;padding:.8rem 1rem;border-radius:12px;border:1px solid var(--line);background:var(--bg);resize:vertical;min-height:110px;font:1rem/1.7 var(--f-head);transition:.3s}
+input.field{min-height:0;max-width:180px;font-family:var(--f-ui)}
+.field:focus{border-color:var(--gold);box-shadow:0 0 0 4px rgba(var(--glow),.15);outline:0}
+.nform__row{display:flex;gap:1rem;align-items:center;flex-wrap:wrap}
+.err{color:#ff8a6b;font-size:.9rem;min-height:1.2em}
+
+.note__date{font-size:.85rem;color:var(--muted)}
+.note__ar{font:1.5rem/2 var(--f-ar);direction:rtl;text-align:right;color:var(--gold-soft);opacity:.85;margin-bottom:.8rem}
+.note__text{font:500 1.1rem/1.8 var(--f-head);white-space:pre-wrap;border-left:3px solid var(--gold);padding-left:1rem}
+.note__acts{display:flex;gap:.6rem;margin-top:1.1rem}
+.note__acts .btn{padding:.35rem .9rem;font-size:.9rem}
+.confirm .modal__box{padding:1.6rem;text-align:center;gap:.5rem}
+.confirm h2{font:600 1.4rem var(--f-head);color:var(--gold)}
+.confirm p{color:var(--muted);margin-bottom:1rem}
+.confirm .row{display:flex;gap:.8rem;justify-content:center}
+
+/* ===== RESPONSIVE: tablet (≤1024px) ===== */
+@media(max-width:1024px){
+  .ptitle{margin-bottom:1.5rem}
+  .nform{padding:1.2rem}
+  .note__text{font-size:1.05rem}
+}
+
+/* ===== RESPONSIVE: phone (≤480px) ===== */
+@media(max-width:480px){
+  .ptitle{font-size:clamp(1.6rem,8vw,2.1rem);margin-bottom:1.2rem}
+  .empty{padding:2.5rem 1rem}
+  .empty h2{font-size:1.2rem}
+  .nform{padding:1rem;gap:.7rem}
+  .field{font-size:16px;padding:.75rem .9rem}
+  .nform__row{gap:.7rem}
+  .note__ar{font-size:1.4rem}
+  .note__text{font-size:1rem;padding-left:.8rem}
+  .note__acts{flex-wrap:wrap}
+  .note__acts .btn{min-height:44px;padding:.45rem 1rem}
+  .cmts__f{flex-wrap:wrap}
+  .cmts__f textarea{flex:1 1 100%;min-width:0}
+  .cmts__f .btn{min-height:44px}
+  .cmt .icon-btn{width:44px;height:44px}
+  .confirm .modal__box{padding:1.2rem}
+  .confirm .row{flex-wrap:wrap}
+  .confirm .row .btn{flex:1 1 120px;min-height:44px}
+}
